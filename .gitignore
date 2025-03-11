@@ -2,8 +2,8 @@
 Backend/.vs/
 
 # Ignore .NET build outputs
-Backend/bin/
-Backend/obj/
+Backend/*bin/
+Backend/*obj/
 
 # Ignore user-specific files
 Backend/*.user
@@ -28,8 +28,8 @@ Backend/*.mdf
 Backend/*.ldb
 
 # Ignore local configuration files
-Backend/appsettings.json
-Backend/appsettings.Development.json
+Backend/*appsettings.json
+Backend/*appsettings.Development.json
 
 # Ignore Angular dependencies and build files
 Frontend/node_modules/
