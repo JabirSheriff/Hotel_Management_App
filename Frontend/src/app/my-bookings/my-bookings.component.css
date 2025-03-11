@@ -1,0 +1,64 @@
+.container {
+    max-width: 1200px;
+  }
+  
+  .my-bookings-header app-header nav.bg-\[\#003b95\] {
+    background-color: #ffffff !important;
+  }
+  
+  .my-bookings-header .text-white {
+    color: #1f2937 !important;
+  }
+  
+  .my-bookings-header .hover\:text-gray-200:hover {
+    color: #4b5563 !important;
+  }
+  
+  .my-bookings-header .text-gray-200 {
+    color: #4b5563 !important;
+  }
+  
+  .my-bookings-header .avatar.bg-white {
+    background-color: #ffffff !important;
+  }
+  
+  /* Button styles */
+  .btn {
+    padding: 0.5rem 1.5rem;
+    border-radius: 0.375rem;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .btn-view {
+    background-color: #003b95;
+    color: #ffffff;
+    border: 1px solid #003b95;
+  }
+  
+  .btn-view:hover {
+    background-color: #002b6d;
+    border-color: #002b6d;
+  }
+  
+  .btn-pay {
+    background-color: #10b981;
+    color: #ffffff;
+    border: 1px solid #10b981;
+  }
+  
+  .btn-pay:hover {
+    background-color: #059669;
+    border-color: #059669;
+  }
+  
+  .btn-cancel {
+    background-color: #ef4444;
+    color: #ffffff;
+    border: 1px solid #ef4444;
+  }
+  
+  .btn-cancel:hover {
+    background-color: #dc2626;
+    border-color: #dc2626;
+  }

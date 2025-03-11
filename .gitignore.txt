@@ -1,0 +1,61 @@
+# Ignore everything inside .vs (Visual Studio folder)
+Backend/.vs/
+
+# Ignore .NET build outputs
+Backend/bin/
+Backend/obj/
+
+# Ignore user-specific files
+Backend/*.user
+Backend/*.suo
+Backend/*.userosscache
+Backend/*.sln.docstates
+
+# Ignore logs and temp files
+Backend/logs/
+Backend/*.log
+Backend/*.cache
+
+# Ignore compiled DLLs and NuGet packages
+Backend/*.dll
+Backend/*.exe
+Backend/*.pdb
+Backend/packages/
+Backend/.nuget/
+
+# Ignore database-related files (if using SQLite or other local DBs)
+Backend/*.mdf
+Backend/*.ldb
+
+# Ignore local configuration files
+Backend/appsettings.json
+Backend/appsettings.Development.json
+
+# Ignore Angular dependencies and build files
+Frontend/node_modules/
+Frontend/dist/
+Frontend/.angular/
+
+# Ignore IDE and editor-specific files
+Frontend/.vscode/
+Frontend/.editorconfig
+
+# Ignore logs and temporary files
+Frontend/npm-debug.log*
+Frontend/yarn-error.log*
+Frontend/.eslintcache
+
+# Ignore compiled TypeScript files
+Frontend/*.js
+Frontend/*.js.map
+
+# Ignore Tailwind cache (if applicable)
+Frontend/.cache/
+
+# Ignore coverage reports (if running tests)
+Frontend/coverage/
+Frontend/*.coverage
+
+# OS-specific ignores
+.DS_Store
+Thumbs.db

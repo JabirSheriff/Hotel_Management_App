@@ -1,0 +1,239 @@
+.container {
+    max-width: 1200px;
+  }
+  
+  /* Ensure table responsiveness */
+  table {
+    width: 100%;
+  }
+  
+  /* Pie chart canvas styling */
+  canvas {
+    display: block;
+  }
+
+  /* Existing styles remain unchanged */
+.min-h-screen {
+    min-height: 100vh;
+  }
+  
+  .container {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  
+  .bg-gray-100 {
+    background-color: #f7fafc;
+  }
+  
+  .bg-white {
+    background-color: #ffffff;
+  }
+  
+  .shadow-md {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .rounded-lg {
+    border-radius: 0.5rem;
+  }
+  
+  .text-gray-800 {
+    color: #2d3748;
+  }
+  
+  .text-gray-500 {
+    color: #a0aec0;
+  }
+  
+  .text-gray-600 {
+    color: #718096;
+  }
+  
+  .text-sm {
+    font-size: 0.875rem;
+  }
+  
+  .text-xs {
+    font-size: 0.75rem;
+  }
+  
+  .font-bold {
+    font-weight: 700;
+  }
+  
+  .font-medium {
+    font-weight: 500;
+  }
+  
+  .font-semibold {
+    font-weight: 600;
+  }
+  
+  .uppercase {
+    text-transform: uppercase;
+  }
+  
+  .tracking-wider {
+    letter-spacing: 0.05em;
+  }
+  
+  .divide-y > :not([hidden]) ~ :not([hidden]) {
+    border-top-width: 1px;
+  }
+  
+  .divide-gray-200 > :not([hidden]) ~ :not([hidden]) {
+    border-color: #edf2f7;
+  }
+  
+  .px-6 {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  
+  .py-3 {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+  
+  .py-4 {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+  
+  .py-8 {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  
+  .p-6 {
+    padding: 1.5rem;
+  }
+  
+  .mb-6 {
+    margin-bottom: 1.5rem;
+  }
+  
+  .mt-2 {
+    margin-top: 0.5rem;
+  }
+  
+  .mt-4 {
+    margin-top: 1rem;
+  }
+  
+  .mt-6 {
+    margin-top: 1.5rem;
+  }
+  
+  .max-w-6xl {
+    max-width: 72rem;
+  }
+  
+  .w-5 {
+    width: 1.25rem;
+  }
+  
+  .h-5 {
+    height: 1.25rem;
+  }
+  
+  .w-8 {
+    width: 2rem;
+  }
+  
+  .h-8 {
+    height: 2rem;
+  }
+  
+  /* .max-w-[300px] {
+    max-width: 300px;
+  }
+  
+  .max-h-[300px] {
+    max-height: 300px;
+  } */
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .whitespace-nowrap {
+    white-space: nowrap;
+  }
+  
+  .hover:bg-gray-50:hover {
+    background-color: #f9fafb;
+  }
+  
+  .border {
+    border-width: 1px;
+  }
+  
+  .border-gray-300 {
+    border-color: #e2e8f0;
+  }
+  
+  .focus\:outline-none:focus {
+    outline: none;
+  }
+  
+  .focus\:ring-2:focus {
+    box-shadow: 0 0 0 2px #3b82f6;
+  }
+  
+  .focus\:ring-blue-500:focus {
+    box-shadow: 0 0 0 2px #3b82f6;
+  }
+  
+  .animate-spin {
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  /* New styles for action column and button */
+  .actions-column button {
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .actions-column button:hover:not(:disabled) {
+    background-color: #166534; /* Darker green on hover */
+  }
+  
+  .actions-column button:disabled {
+    cursor: not-allowed;
+  }
+  
+  .bg-green-600 {
+    background-color: #16a34a;
+  }
+  
+  .text-white {
+    color: #ffffff;
+  }
+  
+  .px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .py-1 {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+  }
+  
+  .rounded {
+    border-radius: 0.25rem;
+  }
+  
+  .hover\:bg-green-700:hover {
+    background-color: #14532d;
+  }

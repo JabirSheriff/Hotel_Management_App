@@ -1,0 +1,218 @@
+<app-header [ngClass]="{'blur-sm': isModalOpen}"></app-header>
+<app-auth-modals (modalVisibilityChange)="onModalVisibilityChange($event)"></app-auth-modals>
+
+<div
+  class="w-full pt-[6rem] min-h-[30rem]"
+  [ngClass]="{
+    'bg-upcoming': activeTab === 'upcoming',
+    'bg-cancelled': activeTab === 'cancelled',
+    'bg-completed': activeTab === 'completed',
+    'blur-sm': isModalOpen
+  }"
+>
+  <div class="container mx-auto px-5 max-w-6xl">
+    <div class="flex flex-col md:flex-row md:items-center py-6">
+      <div class="avatar bg-white text-[#003b95] font-arial font-medium w-16 h-16 rounded-full flex items-center justify-center text-3xl mx-auto md:mx-0 md:mr-6 mb-4 md:mb-0">
+        {{ userInitial }}
+      </div>
+      <div class="flex-1 text-center md:text-left">
+        <h1 class="text-4xl font-bold text-white mb-2">Welcome to Bookr, {{ userFullName }}!</h1>
+        <p class="text-xl text-gray-200 italic">“Stay. Relax. Repeat.”</p>
+      </div>
+    </div>
+    <div class="py-4">
+      <nav class="text-lg">
+        <a [routerLink]="['/my-account']" class="hover:underline" [ngClass]="{'text-gray-200': activeTab === 'upcoming' || activeTab === 'cancelled', 'text-gray-600': activeTab === 'completed'}">
+          My Account
+        </a>
+        <span class="mx-2" [ngClass]="{'text-gray-200': activeTab === 'upcoming' || activeTab === 'cancelled', 'text-gray-600': activeTab === 'completed'}">></span>
+        <span class="font-semibold" [ngClass]="{'text-white': activeTab === 'upcoming' || activeTab === 'cancelled', 'text-gray-800': activeTab === 'completed'}">My Bookings</span>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<div class="relative">
+  <div class="container mx-auto px-5 max-w-6xl">
+    <div class="bg-white rounded-2xl shadow-lg p-8 absolute left-1/2 transform -translate-x-1/2 -top-48 w-full max-w-5xl min-h-[32rem]">
+      <div class="flex space-x-6 border-b border-gray-200 mb-6">
+        <button (click)="setActiveTab('upcoming')" class="flex items-center pb-2 px-2 focus:outline-none" [ngClass]="{'border-b-2 border-upcoming text-upcoming': activeTab === 'upcoming', 'text-gray-600': activeTab !== 'upcoming'}">
+          <img src="upcoming.png" alt="Upcoming Icon" class="h-10 w-10 mr-2" /> Upcoming Trips
+        </button>
+        <button (click)="setActiveTab('cancelled')" class="flex items-center pb-2 px-2 focus:outline-none" [ngClass]="{'border-b-2 border-cancelled text-cancelled': activeTab === 'cancelled', 'text-gray-600': activeTab !== 'cancelled'}">
+          <img src="cancelled.png" alt="Cancelled Icon" class="h-10 w-10 mr-2" /> Cancelled
+        </button>
+        <button (click)="setActiveTab('completed')" class="flex items-center pb-2 px-2 focus:outline-none" [ngClass]="{'border-b-2 border-completed text-completed': activeTab === 'completed', 'text-gray-600': activeTab !== 'completed'}">
+          <img src="completed.png" alt="Completed Icon" class="h-10 w-10 mr-2" /> Completed
+        </button>
+      </div>
+      <div>
+        <div *ngIf="errorMessage" class="text-center text-red-500 py-4">
+          <p>{{ errorMessage }}</p>
+        </div>
+        <div *ngIf="activeTab === 'upcoming' && !errorMessage" class="text-gray-600">
+          <div *ngFor="let booking of upcomingBookings" class="border-b border-gray-200 py-4">
+            <div class="flex justify-between items-center">
+              <div>
+                <h3 class="text-lg font-semibold">{{ booking.hotelName }}</h3>
+                <p>Check-In: {{ booking.checkInDate | date:'mediumDate' }}</p>
+                <p>Check-Out: {{ booking.checkOutDate | date:'mediumDate' }}</p>
+                <p>Guests: {{ booking.numberOfGuests }}</p>
+                <p>Total: ₹{{ booking.totalPrice | number:'1.0-0' }}</p>
+                <p>Booking Status: {{ booking.status }}</p>
+              </div>
+              <div class="flex space-x-3">
+                <button (click)="viewDetails(booking.bookingId)" class="btn btn-view transition-transform transform hover:scale-105 active:scale-95">
+                  View Details
+                </button>
+                <button *ngIf="booking.status === 'Pending' && !booking.payment" (click)="showPaymentModal(booking.bookingId)" class="btn btn-pay transition-transform transform hover:scale-105 active:scale-95">
+                  Pay Now
+                </button>
+                <button *ngIf="booking.status === 'Pending'" (click)="cancelBooking(booking.bookingId)" class="btn btn-cancel transition-transform transform hover:scale-105 active:scale-95">
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+          <p *ngIf="upcomingBookings.length === 0" class="text-center py-4">No upcoming trips.</p>
+        </div>
+        <div *ngIf="activeTab === 'cancelled' && !errorMessage" class="text-gray-600">
+          <div *ngFor="let booking of cancelledBookings" class="border-b border-gray-200 py-4">
+            <div class="flex justify-between items-center">
+              <div>
+                <h3 class="text-lg font-semibold">{{ booking.hotelName }}</h3>
+                <p>Check-In: {{ booking.checkInDate | date:'mediumDate' }}</p>
+                <p>Check-Out: {{ booking.checkOutDate | date:'mediumDate' }}</p>
+                <p>Guests: {{ booking.numberOfGuests }}</p>
+                <p>Total: ₹{{ booking.totalPrice | number:'1.0-0' }}</p>
+                <p>Booking Status: {{ booking.status }}</p>
+              </div>
+              <div>
+                <button (click)="viewDetails(booking.bookingId)" class="bg-blue-600 text-white px-3 py-1 rounded-md">View</button>
+              </div>
+            </div>
+          </div>
+          <p *ngIf="cancelledBookings.length === 0" class="text-center py-4">No cancelled bookings.</p>
+        </div>
+        <div *ngIf="activeTab === 'completed' && !errorMessage" class="text-gray-600">
+          <div *ngFor="let booking of completedBookings" class="border-b border-gray-200 py-4">
+            <div class="flex justify-between items-center">
+              <div>
+                <h3 class="text-lg font-semibold">{{ booking.hotelName }}</h3>
+                <p>Check-In: {{ booking.checkInDate | date:'mediumDate' }}</p>
+                <p>Check-Out: {{ booking.checkOutDate | date:'mediumDate' }}</p>
+                <p>Guests: {{ booking.numberOfGuests }}</p>
+                <p>Total: ₹{{ booking.totalPrice | number:'1.0-0' }}</p>
+                <p>Booking Status: {{ booking.status }}</p>
+              </div>
+              <div>
+                <button (click)="viewDetails(booking.bookingId)" class="bg-blue-600 text-white px-3 py-1 rounded-md">View</button>
+              </div>
+            </div>
+          </div>
+          <p *ngIf="completedBookings.length === 0" class="text-center py-4">No completed bookings.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Payment Options Modal -->
+<div *ngIf="showPaymentOptions" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
+  <div class="bg-white rounded-lg p-6 w-full max-w-md">
+    <h3 class="text-lg font-semibold mb-4">Select Payment Method</h3>
+    <div class="space-y-4">
+      <button *ngFor="let method of paymentMethods" (click)="selectPaymentMethod(method)" class="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700">
+        {{ method }}
+      </button>
+    </div>
+    <div class="flex justify-end mt-4">
+      <button (click)="closePaymentModal()" class="bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Payment Confirmation Modal -->
+<div *ngIf="showPaymentConfirmation" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
+  <div class="bg-white rounded-lg p-6 w-full max-w-md">
+    <h3 class="text-lg font-semibold mb-4">Confirm Your Payment</h3>
+    <div *ngIf="selectedBooking" class="text-gray-600 mb-4">
+      <p><strong>Hotel:</strong> {{ selectedBooking.hotelName }}</p>
+      <p><strong>Check-In:</strong> {{ selectedBooking.checkInDate | date:'mediumDate' }}</p>
+      <p><strong>Check-Out:</strong> {{ selectedBooking.checkOutDate | date:'mediumDate' }}</p>
+      <p><strong>Guests:</strong> {{ selectedBooking.numberOfGuests }}</p>
+      <p><strong>Total Amount:</strong> ₹{{ selectedBooking.totalPrice | number:'1.0-0' }}</p>
+      <p><strong>Payment Method:</strong> {{ selectedPaymentMethod }}</p>
+    </div>
+    <p class="text-sm text-gray-500 mb-4">Are you sure you want to proceed with this payment?</p>
+    <div class="flex justify-end space-x-3">
+      <button (click)="closePaymentConfirmation()" class="bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400">No</button>
+      <button (click)="confirmPayment()" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">Yes</button>
+    </div>
+  </div>
+</div>
+
+<!-- Booking Details Modal -->
+<div *ngIf="showBookingDetails" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
+  <div class="bg-white rounded-lg p-6 w-full max-w-3xl max-h-[90vh] overflow-y-auto">
+    <div id="booking-details-content">
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">Booking Details - ID: {{ bookingDetails.bookingId }}</h2>
+      <div class="space-y-6">
+        <!-- Customer Details -->
+        <div>
+          <h3 class="text-lg font-semibold text-gray-700">Customer Details</h3>
+          <p><strong>Name:</strong> {{ bookingDetails.customer.name }}</p>
+          <p><strong>Email:</strong> {{ bookingDetails.customer.email }}</p>
+        </div>
+
+        <!-- Hotel Details -->
+        <div>
+          <h3 class="text-lg font-semibold text-gray-700">Hotel Details</h3>
+          <p><strong>Name:</strong> {{ bookingDetails.hotel.name }}</p>
+          <p><strong>Address:</strong> {{ bookingDetails.hotel.address }}, {{ bookingDetails.hotel.city }}</p>
+          <p><strong>Rating:</strong> {{ bookingDetails.hotel.rating }}/5</p>
+          <p><strong>Amenities:</strong> {{ bookingDetails.hotel.amenities.join(', ') || 'N/A' }}</p>
+        </div>
+
+        <!-- Booking Details -->
+        <div>
+          <h3 class="text-lg font-semibold text-gray-700">Booking Details</h3>
+          <p><strong>Check-In:</strong> {{ bookingDetails.checkInDate | date:'mediumDate' }}</p>
+          <p><strong>Check-Out:</strong> {{ bookingDetails.checkOutDate | date:'mediumDate' }}</p>
+          <p><strong>Number of Days:</strong> {{ bookingDetails.numberOfDays }}</p>
+          <p><strong>Guests:</strong> {{ bookingDetails.numberOfGuests }}</p>
+        </div>
+
+        <!-- Rooms Booked -->
+        <div>
+          <h3 class="text-lg font-semibold text-gray-700">Rooms Booked</h3>
+          <div *ngFor="let room of bookingDetails.rooms" class="border-t border-gray-200 pt-2 mt-2">
+            <p><strong>Room Number:</strong> {{ room.roomNumber }}</p>
+            <p><strong>Room Type:</strong> {{ room.roomType }}</p>
+            <p><strong>Price per Night:</strong> ₹{{ room.pricePerNight | number:'1.0-0' }}</p>
+          </div>
+        </div>
+
+        <!-- Bill Structure -->
+        <div>
+          <h3 class="text-lg font-semibold text-gray-700">Bill Summary</h3>
+          <p><strong>Base Price ({{ bookingDetails.numberOfDays }} nights):</strong> ₹{{ bookingDetails.bill.basePrice | number:'1.0-0' }}</p>
+          <p><strong>Tax (18% GST):</strong> ₹{{ bookingDetails.bill.taxAmount | number:'1.0-0' }}</p>
+          <p class="font-bold"><strong>Total Amount:</strong> ₹{{ bookingDetails.bill.totalAmount | number:'1.0-0' }}</p>
+        </div>
+
+        <!-- Refund Policy -->
+        <div>
+          <h3 class="text-lg font-semibold text-gray-700">Refund Policy</h3>
+          <p class="whitespace-pre-line text-sm text-gray-600">{{ bookingDetails.refundPolicy }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="flex justify-end mt-6 space-x-3">
+      <button (click)="downloadPDF()" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">Download PDF</button>
+      <button (click)="closeBookingDetails()" class="bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="h-64"></div>
