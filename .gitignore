@@ -33,28 +33,7 @@ Backend/*appsettings.Development.json
 
 # Ignore Angular dependencies and build files
 Frontend/node_modules/
-Frontend/dist/
-Frontend/.angular/
 
-# Ignore IDE and editor-specific files
-Frontend/.vscode/
-Frontend/.editorconfig
-
-# Ignore logs and temporary files
-Frontend/npm-debug.log*
-Frontend/yarn-error.log*
-Frontend/.eslintcache
-
-# Ignore compiled TypeScript files
-Frontend/*.js
-Frontend/*.js.map
-
-# Ignore Tailwind cache (if applicable)
-Frontend/.cache/
-
-# Ignore coverage reports (if running tests)
-Frontend/coverage/
-Frontend/*.coverage
 
 # OS-specific ignores
 .DS_Store
